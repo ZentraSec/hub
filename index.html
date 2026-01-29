@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZentraSec | Security Intelligence</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --accent: #0066ff;
+            --text: #1d1d1f;
+            --text-muted: #86868b;
+            --border: rgba(0, 0, 0, 0.08);
+            --bg-card: #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        body { 
+            background: #ffffff;
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* --- BACKGROUND MESH --- */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(0, 102, 255, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 90% 80%, rgba(0, 255, 136, 0.02) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        .logo-aurora {
+            font-weight: 800;
+            font-size: 1.5rem;
+            letter-spacing: -1.5px;
+            background: linear-gradient(90deg, #0066ff, #00ff88, #7000ff, #0066ff);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: aurora 4s linear infinite;
+        }
+
+        @keyframes aurora { to { background-position: 200% center; } }
+
+        nav {
+            padding: 20px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            position: sticky; top: 0; z-index: 1000;
+        }
+
+        .hero { 
+            padding: 80px 8% 40px; 
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        h1 { 
+            font-size: clamp(2.5rem, 8vw, 4.5rem); 
+            font-weight: 800; 
+            letter-spacing: -3px; 
+            line-height: 0.9; 
+            margin-bottom: 25px;
+            color: #000;
+        }
+
+        .subtitle { 
+            color: var(--text-muted); 
+            font-size: 1.1rem; 
+            max-width: 600px; 
+            margin-bottom: 40px;
+        }
+
+        /* --- BUTTON SYSTEM --- */
+        .container-btns {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+            max-width: 400px;
+            margin-bottom: 60px;
+        }
+
+        .row { display: flex; gap: 12px; width: 100%; }
+
+        .btn {
+            flex: 1;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-decoration: none;
+            text-align: center;
+            transition: 0.3s;
+            border: 1px solid var(--border);
+            text-transform: uppercase;
+        }
+
+        .btn-glass { background: #fff; color: #000; }
+        .btn-glass:hover { border-color: var(--accent); color: var(--accent); }
+
+        .btn-main {
+            background: #000;
+            color: #fff;
+            width: 100%;
+            cursor: pointer;
+            border: none;
+        }
+
+        #edu-check { display: none; }
+        .split-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: 0.5s ease;
+        }
+
+        #edu-check:checked ~ .split-box {
+            max-height: 100px;
+            opacity: 1;
+            margin-top: 10px;
+        }
+
+        .btn-sub { background: var(--accent); color: #fff; border: none; }
+
+        /* --- GRID INFO --- */
+        .grid-services {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+            width: 84%;
+            margin: 0 auto;
+        }
+
+        .card { background: #fff; padding: 40px; transition: 0.3s; }
+        .card:hover { background: #fafafa; }
+
+        .card h3 {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            color: var(--accent);
+        }
+
+        .card p { color: #515154; font-size: 0.9rem; line-height: 1.6; }
+
+        footer {
+            margin-top: 80px;
+            padding: 40px 8%;
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+
+        .support-text { font-size: 0.8rem; color: #000; font-weight: 700; margin-bottom: 5px; }
+        .copyright { font-size: 0.7rem; color: #999; letter-spacing: 1px; }
+
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo-aurora">ZENTRASEC</div>
+        <div style="font-size: 0.75rem; font-weight: 800; color: #000;">MHD SYAFIQ</div>
+    </nav>
+
+    <main class="hero">
+        <h1>Security<br>Intelligence.</h1>
+        <p class="subtitle">Independent research laboratory focusing on vulnerability analysis and high-level infrastructure security.</p>
+
+        <div class="container-btns">
+            <div class="row">
+                <a href="osint.html" class="btn btn-glass">OSINT Menu</a>
+                <a href="pentest.html" class="btn btn-glass">Jasa Pentest</a>
+            </div>
+
+            <input type="checkbox" id="edu-check">
+            <label for="edu-check" class="btn btn-main">Mulai Belajar</label>
+
+            <div class="split-box">
+                <a href="digital.html" class="btn btn-sub btn">Digital Ecosystem</a>
+                <a href="hacking.html" class="btn btn-sub btn">Offensive Security</a>
+            </div>
+        </div>
+    </main>
+
+    <section class="grid-services">
+        <div class="card">
+            <h3>Vulnerability</h3>
+            <p>Advanced methodology in identifying complex system weaknesses.</p>
+        </div>
+        <div class="card">
+            <h3>Architecture</h3>
+            <p>Designing secure-by-default infrastructure for digital assets.</p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="support-text">Support by Hacktivis Indonesia</div>
+        <div class="copyright">Copyright ZentraSec 2026</div>
+    </footer>
+
+</body>
+</html>
+
