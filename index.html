@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZentraSec Hub | Security Research</title>
+    <style>
+        :root {
+            --primary: #0a0a0c;
+            --accent: #007aff;
+            --text-main: #ffffff;
+            --text-dim: #a1a1a6;
+            --bg-card: #161618;
+            --nav-bg: rgba(10, 10, 12, 0.9);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--primary);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.2rem 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--nav-bg);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .logo {
+            font-size: 1.3rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span { color: var(--accent); }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 10%;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            letter-spacing: -2px;
+        }
+
+        .hero p {
+            color: var(--text-dim);
+            max-width: 600px;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .container {
+            padding: 5rem 10%;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.03);
+        }
+
+        .card h3 { margin-bottom: 0.8rem; color: var(--accent); }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">ZentraSec<span>Hub</span></div>
+    </nav>
+
+    <section class="hero">
+        <h1>Welcome, Analysts.</h1>
+        <p>Professional security research, audit laboratory, and vulnerability analysis.</p>
+    </section>
+
+    <section class="container">
+        <div class="grid">
+            <div class="card">
+                <h3>Vulnerability Lab</h3>
+                <p>Advanced exploit research and mitigation strategies.</p>
+            </div>
+            <div class="card">
+                <h3>System Audit</h3>
+                <p>Full infrastructure security assessment and reporting.</p>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>
