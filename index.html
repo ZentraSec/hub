@@ -3,104 +3,177 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZentraSec | Terminal</title>
+    <title>ZentraSec | Security Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap');
+        :root {
+            --bg: #000000;
+            --card-bg: #0a0a0a;
+            --accent: #ffffff;
+            --text-muted: #888888;
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
 
         body {
-            background-color: #0d0d0d;
-            color: #00ff41; /* Hijau matrix */
-            font-family: 'Fira Code', monospace;
+            background-color: var(--bg);
+            color: white;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
-            overflow: hidden;
-        }
-
-        .terminal-box {
-            width: 90%;
-            max-width: 700px;
-            background: rgba(0, 0, 0, 0.9);
-            border: 1px solid #333;
+            min-height: 100vh;
             padding: 20px;
-            box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
-            border-radius: 5px;
-            position: relative;
         }
 
-        .terminal-header {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 25px;
-            background: #222;
-            display: flex;
-            align-items: center;
-            padding: 0 10px;
-            border-bottom: 1px solid #333;
+        .main-container {
+            width: 100%;
+            max-width: 900px;
         }
 
-        .dot { height: 8px; width: 8px; border-radius: 50%; margin-right: 5px; }
-        .red { background: #ff5f56; }
-        .yellow { background: #ffbd2e; }
-        .green { background: #27c93f; }
-
-        .content { margin-top: 20px; }
-
-        .command { color: #fff; }
-        .response { color: #00ff41; margin-bottom: 15px; }
-
-        .cursor {
-            display: inline-block;
-            width: 10px;
-            height: 18px;
-            background: #00ff41;
-            animation: blink 1s infinite;
-            vertical-align: middle;
-        }
-
-        @keyframes blink { 50% { opacity: 0; } }
-
-        .glitch {
-            font-size: 1.5rem;
-            font-weight: bold;
+        .logo {
+            font-weight: 800;
+            font-size: 1rem;
+            letter-spacing: 3px;
             text-transform: uppercase;
-            position: relative;
-            text-shadow: 0.05em 0 0 rgba(255,0,0,.75), -0.025em -0.05em 0 rgba(0,255,0,.75), 0.025em 0.05em 0 rgba(0,0,255,.75);
-            animation: glitch 500ms infinite;
+            margin-bottom: 50px;
+            display: inline-block;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 5px;
         }
 
-        @keyframes glitch {
-            0% { text-shadow: 0.05em 0 0 rgba(255,0,0,.75), -0.025em -0.05em 0 rgba(0,255,0,.75), 0.025em 0.05em 0 rgba(0,0,255,.75); }
-            14% { text-shadow: 0.05em 0 0 rgba(255,0,0,.75), -0.025em -0.05em 0 rgba(0,255,0,.75), 0.025em 0.05em 0 rgba(0,0,255,.75); }
-            15% { text-shadow: -0.05em -0.025em 0 rgba(255,0,0,.75), 0.025em 0.025em 0 rgba(0,255,0,.75), -0.05em -0.05em 0 rgba(0,0,255,.75); }
-            49% { text-shadow: -0.05em -0.025em 0 rgba(255,0,0,.75), 0.025em 0.025em 0 rgba(0,255,0,.75), -0.05em -0.05em 0 rgba(0,0,255,.75); }
-            50% { text-shadow: 0.025em 0.05em 0 rgba(255,0,0,.75), 0.05em 0 0 rgba(0,255,0,.75), 0 -0.05em 0 rgba(0,0,255,.75); }
-            99% { text-shadow: 0.025em 0.05em 0 rgba(255,0,0,.75), 0.05em 0 0 rgba(0,255,0,.75), 0 -0.05em 0 rgba(0,0,255,.75); }
-            100% { text-shadow: -0.025em 0 0 rgba(255,0,0,.75), -0.025em -0.025em 0 rgba(0,255,0,.75), -0.025em -0.05em 0 rgba(0,0,255,.75); }
+        h1 {
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            font-weight: 800;
+            letter-spacing: -3px;
+            line-height: 0.9;
+            margin-bottom: 25px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 550px;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        /* --- AREA TOMBOL (Fungsional) --- */
+        .cta-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 60px;
+        }
+
+        .btn {
+            padding: 15px 35px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--bg);
+            border: 1px solid var(--accent);
+        }
+
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--accent);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--accent);
+            border: 1px solid var(--border);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--accent);
+        }
+
+        /* --- GRID INFO --- */
+        .grid-services {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+        }
+
+        .card {
+            background: var(--bg);
+            padding: 35px;
+            transition: all 0.3s ease;
+        }
+
+        .card h3 {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            color: var(--text-muted);
+        }
+
+        .card p {
+            color: #ccc;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        footer {
+            margin-top: 50px;
+            display: flex;
+            justify-content: space-between;
+            color: #333;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
         }
     </style>
 </head>
 <body>
+    
+    <main class="main-container">
+        <div class="logo">ZENTRASEC</div>
+        
+        <header>
+            <h1>Security<br>Intelligence.</h1>
+            <p class="subtitle">Independent research laboratory focusing on vulnerability analysis and high-level infrastructure security.</p>
+        </header>
 
-    <div class="terminal-box">
-        <div class="terminal-header">
-            <div class="dot red"></div>
-            <div class="dot yellow"></div>
-            <div class="dot green"></div>
+        <div class="cta-group">
+            <a href="https://github.com/ZentraSec" class="btn btn-primary">View Projects</a>
+            <a href="mailto:your-email@example.com" class="btn btn-outline">Contact Analyst</a>
         </div>
-        <div class="content">
-            <div class="glitch">ZentraSec HUB v1.0</div>
-            <p><span class="command">root@zentrasec:~#</span> <span class="response">initialize system...</span></p>
-            <p><span class="command">root@zentrasec:~#</span> <span class="response">status: <span style="color: #fff; background: green; padding: 0 5px;">ACTIVE</span></span></p>
-            <p><span class="command">root@zentrasec:~#</span> <span class="response">loading research modules...</span></p>
-            <p><span class="command">root@zentrasec:~#</span> <span>accessing lab_data...</span><span class="cursor"></span></p>
-        </div>
-    </div>
+
+        <section class="grid-services">
+            <div class="card">
+                <h3>Vulnerability</h3>
+                <p>Advanced methodology in identifying complex system weaknesses.</p>
+            </div>
+            <div class="card">
+                <h3>Architecture</h3>
+                <p>Designing secure-by-default infrastructure for digital assets.</p>
+            </div>
+        </section>
+
+        <footer>
+            <div>EST. 2026</div>
+            <div>© ALL RIGHTS RESERVED</div>
+        </footer>
+    </main>
 
 </body>
 </html>
