@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZentraSec | DIGITAL ECOSYSTEM</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --accent: #0088ff;
+            --bg: #f0f4f8;
+            --glass: rgba(255, 255, 255, 0.5);
+            --border: rgba(255, 255, 255, 0.7);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        
+        body { 
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #1d1d1f; 
+            min-height: 100vh;
+        }
+
+        nav {
+            padding: 15px 8%;
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            position: sticky; top: 0; z-index: 100;
+        }
+
+        .logo-aurora {
+            font-weight: 800; font-size: 1.1rem; letter-spacing: -1px;
+            background: linear-gradient(90deg, #0066ff, #7000ff);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+
+        .close-btn {
+            background: #fff; padding: 6px 15px; border-radius: 6px;
+            text-decoration: none; color: #000; font-size: 0.7rem;
+            font-weight: 700; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        /* --- SLIM GLASS HEADER --- */
+        .glass-header {
+            max-width: 700px;
+            margin: 30px auto 20px;
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 20px 30px; /* Diperkecil biar tipis */
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+        }
+
+        .glass-header h1 {
+            font-size: 0.9rem; font-weight: 800; letter-spacing: 2px;
+            text-transform: uppercase; white-space: nowrap;
+        }
+
+        .search-container {
+            display: flex;
+            flex-grow: 1;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 8px 15px;
+            border-radius: 8px;
+            border: 1px solid rgba(0,0,0,0.05);
+            background: rgba(255,255,255,0.8);
+            font-size: 0.85rem;
+            outline: none;
+        }
+
+        .search-btn {
+            background: var(--accent); color: white; border: none;
+            padding: 8px 12px; border-radius: 8px; cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        /* --- LIST --- */
+        .container { max-width: 700px; margin: 0 auto; padding: 0 20px; }
+        
+        .section-label { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: #888; margin: 20px 5px 10px; letter-spacing: 1px; }
+
+        .article-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+            color: inherit;
+            margin-bottom: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.02);
+            transition: 0.2s;
+        }
+
+        .article-card:hover { transform: scale(1.01); box-shadow: 0 8px 20px rgba(0,0,0,0.05); }
+
+        .thumb {
+            width: 60px; height: 60px;
+            border-radius: 8px;
+            background: #111;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        .thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+        .info span { font-size: 0.65rem; color: var(--accent); font-weight: 700; text-transform: uppercase; }
+        .info h3 { font-size: 0.95rem; font-weight: 700; margin: 2px 0; }
+        .info p { font-size: 0.8rem; color: #777; line-height: 1.3; }
+
+        .arrow { color: #ddd; margin-left: auto; font-size: 1.2rem; }
+
+        #no-result { display: none; text-align: center; padding: 30px; font-size: 0.8rem; color: #999; }
+
+        footer { text-align: center; margin-top: 40px; font-size: 0.6rem; color: #aaa; letter-spacing: 2px; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo-aurora">ZENTRASEC</div>
+        <a href="index.html" class="close-btn">CLOSE</a>
+    </nav>
+
+    <div class="glass-header">
+        <h1>Digital Ecosystem</h1>
+        <div class="search-container">
+            <input type="text" id="searchInput" class="search-box" placeholder="Search Materi...">
+            <button class="search-btn">🔍</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="section-label">Compact Module</div>
+        
+        <div id="articleList">
+            <a href="data-privacy.html" class="article-card">
+                <div class="thumb">
+                    <img src="https://e.top4top.io/p_368156pd67.png" alt="Cloud">
+                </div>
+                <div class="info">
+                    <span>HARDWARE FOUNDATION</span>
+                    <h3>THE CHIP WAR & SEMICONDUCTOR DOMINANCE</h3>
+                    <p>Glob Strategic Infrastructure..</p>
+                </div>
+                <div class="arrow">›</div>
+            </a>
+        <div id="no-result">Materi tidak ditemukan.</div>
+        
+        <footer>SUPPORT BY HACKTIVIS INDONESIA / 2026</footer>
+    </div>
+
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const articleCards = document.querySelectorAll('.article-card');
+        const noResult = document.getElementById('no-result');
+
+        searchInput.addEventListener('input', function() {
+            const filter = this.value.toLowerCase();
+            let found = false;
+
+            articleCards.forEach(card => {
+                const text = card.innerText.toLowerCase();
+                if (text.includes(filter)) {
+                    card.style.display = 'flex';
+                    found = true;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            noResult.style.display = found ? 'none' : 'block';
+        });
+    </script>
+</body>
+</html>
